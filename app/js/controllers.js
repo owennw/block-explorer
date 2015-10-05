@@ -4,9 +4,9 @@
   var blockChainExplorer = angular.module('blockChainExplorer', []);
 
   blockChainExplorer.controller('BlockCtrl', ['$http', function($http) {
-    console.log('hello');
+    var self = this;
     $http.get('blocks/blocks.json').success(function(data) {
-      this.blocks = data;
+      self.blocks = data;
     });
   }]);
 })();
