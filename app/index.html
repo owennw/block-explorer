@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="blockChainExplorer">
 <head>
     <meta charset="UTF-8">
     <title>Block Chain Explorer</title>
     <script src="node_modules/angular/angular.js"></script>
+    <script src="js/controllers.js"></script>
 </head>
-<body>
-    Hello {{'world' + '!' }}
+<body ng-controller="BlockCtrl as blockCtrl">
+    <ul>
+        <li ng-repeat="block in blockCtrl.blocks">
+            <span>{{block.hash}}</span>
+        </li>
+    </ul>
 </body>
 </html>
