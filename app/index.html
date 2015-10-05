@@ -3,14 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Block Chain Explorer</title>
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body ng-controller="BlockCtrl as blockCtrl" ng-cloak>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Block Chain Explorer</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-right nav navbar-nav">
+                <li>Search: <input ng-model="search"></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default" ng-repeat="block in blockCtrl.blocks">
+            <div class="panel-heading">
+                <h3 class="panel-title"><strong>Height</strong>: {{block.height}}</h3>
+            </div>
+            <div class="panel-body">
+                <strong>Bits</strong>: {{block.bits}}
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="node_modules/angular/angular.js"></script>
     <script src="js/controllers.js"></script>
-</head>
-<body ng-controller="BlockCtrl as blockCtrl">
-    <ul>
-        <li ng-repeat="block in blockCtrl.blocks">
-            <span>{{block.hash}}</span>
-        </li>
-    </ul>
 </body>
 </html>
