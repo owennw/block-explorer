@@ -1,0 +1,4 @@
+node_modules/jasmine-node/
+.idea/
+node_modules/
+spec/support/jasmine.json
