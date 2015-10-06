@@ -5,16 +5,27 @@
 
   blockChainControllers.controller('BlockCtrl', ['$http', function($http) {
     var self = this;
-    $http.get('blocks/blocks.json').success(function(data) {
-      self.blocks = data;
-      self.splitBlocks = splitArray(data, 5);
-    });
+
+    var callback = function(response) {
+      self.blocks = response;
+      self.splitBlocks = splitArray(response, 5);
+    }
+
+    getBlocks($http, callback);
+
+    this.loadPrevious = function() {
+      getBlocks($http, callback);
+    };
   }]);
 
   blockChainControllers.controller('BlockDetailCtrl', ['$routeParams',
     function($routeParams) {
       this.blockHeight = $routeParams.blockHeight;
   }]);
+
+  function getBlocks(http, callback) {
+    http.get('blocks/blocks.json').success(callback);
+  }
 
   function splitArray(array, split) {
     var output = [];

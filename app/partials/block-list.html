@@ -21,7 +21,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><strong>Height</strong>: {{block.height}}</th>
+                            <th>Height: {{block.height}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,4 +36,7 @@
             </a>
         </div>
     </div>
+    <button type="button" class="btn btn-default" ng-click="blockCtrl.loadPrevious()">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous 10
+    </button>
 </div>
