@@ -3,7 +3,7 @@
 
   var blockChainControllers = angular.module('blockChainControllers', []);
 
-  blockChainControllers.controller('BlockCtrl', ['$http', function($http) {
+  blockChainControllers.controller('BlockListCtrl', ['$http', function($http) {
     var self = this;
 
     var callback = function(response) {

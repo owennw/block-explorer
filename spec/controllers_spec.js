@@ -3,7 +3,7 @@
 
   describe('BlockExplorer controllers', function() {
 
-    describe('BlockCtrl', function() {
+    describe('BlockListCtrl', function() {
       var ctrl, $httpBackend;
 
       beforeEach(module('blockChainControllers'));
@@ -23,7 +23,7 @@
             {hash: 'b4'},
           ]);
 
-        ctrl = $controller('BlockCtrl', []);
+        ctrl = $controller('BlockListCtrl', []);
       }));
 
       it('should create "blocks" model with 10 blocks fetched from xhr', function() {

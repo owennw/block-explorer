@@ -10,8 +10,8 @@
     $routeProvider
       .when('/blocks', {
         templateUrl: 'partials/block-list.html',
-        controller: 'BlockCtrl',
-        controllerAs: 'blockCtrl'
+        controller: 'BlockListCtrl',
+        controllerAs: 'blockListCtrl'
       })
       .when('/blocks/:blockHeight', {
         templateUrl: 'partials/block-detail.html',
