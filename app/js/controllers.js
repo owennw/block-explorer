@@ -12,20 +12,25 @@
       self.splitBlocks = splitArray(response, numberOfColumns);
     }
 
-    getBlocks($http, callback);
+    getBlocks($http, 'blocks/blocks.json', callback);
 
-    this.loadPrevious = function() {
-      getBlocks($http, callback);
+    self.loadPrevious = function() {
+      getBlocks($http, 'blocks/blocks.json', callback);
     };
   }]);
 
-  blockChainControllers.controller('BlockDetailCtrl', ['$routeParams',
-    function($routeParams) {
-      this.blockHeight = $routeParams.blockHeight;
+  blockChainControllers.controller('BlockDetailCtrl', ['$http', '$routeParams',
+    function($http, $routeParams) {
+      var self = this;
+
+      self.height = $routeParams.blockHeight;
+      getBlocks($http, 'blocks/block.json', function(response) {
+        self.block = response;
+      });
   }]);
 
-  function getBlocks(http, callback) {
-    http.get('blocks/blocks.json').success(callback);
+  function getBlocks(http, url, callback) {
+    http.get(url).success(callback);
   }
 
   function splitArray(array, split) {
