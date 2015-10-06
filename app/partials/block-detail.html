@@ -29,10 +29,6 @@
                 <td>{{blockDetailCtrl.block.merkleroot}}</td>
             </tr>
             <tr>
-                <td>Transactions Count</td>
-                <td>{{blockDetailCtrl.block.tx.length}}</td>
-            </tr>
-            <tr>
                 <td>Time</td>
                 <td>{{blockDetailCtrl.block.time}}</td>
             </tr>
@@ -53,5 +49,21 @@
                 <td>{{blockDetailCtrl.block.reward}}</td>
             </tr>
         </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+            <th>Transactions</th>
+            <th>{{blockDetailCtrl.block.tx.length}}</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="transaction in blockDetailCtrl.block.tx">
+          <td>{{transaction}}</td>
+      </tr>
+      </tbody>
     </table>
 </div>
