@@ -13,6 +13,11 @@
         controller: 'BlockCtrl',
         controllerAs: 'blockCtrl'
       })
+      .when('/blocks/:blockHeight', {
+        templateUrl: 'partials/block-detail.html',
+        controller: 'BlockDetailCtrl',
+        controllerAs: 'blockDetailCtrl'
+      })
       .otherwise({
         redirectTo: '/blocks'
       });

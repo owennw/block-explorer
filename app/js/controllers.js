@@ -11,6 +11,11 @@
     });
   }]);
 
+  blockChainControllers.controller('BlockDetailCtrl', ['$routeParams',
+    function($routeParams) {
+      this.blockHeight = $routeParams.blockHeight;
+  }]);
+
   function splitArray(array, split) {
     var output = [];
     for (var i = 0; i < array.length; i += split) {
