@@ -17,14 +17,23 @@
 <div class="container">
     <div class="row" ng-repeat="blockRows in blockCtrl.splitBlocks">
         <div class="col-md-2" ng-repeat="block in blockRows">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Height</strong>: {{block.height}}</h3>
-                </div>
-                <div class="panel-body">
-                    <strong>Bits</strong>: {{block.bits}}
-                </div>
-            </div>
+            <a href="#/blocks/{{block.height}}" class="thumbnail" style="color:black">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><strong>Height</strong>: {{block.height}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Bits</strong>: {{block.bits}}
+                                <strong>Version</strong>: {{block.version}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </a>
         </div>
     </div>
 </div>
