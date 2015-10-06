@@ -10,7 +10,18 @@
       beforeEach(inject(function(_$httpBackend_, $controller) {
         $httpBackend = _$httpBackend_;
         $httpBackend.expectGET('blocks/blocks.json')
-          .respond([{hash: '1234abcd'}, {hash: 'abcd1234'}]);
+          .respond([
+            {hash: 'a1'},
+            {hash: 'a2'},
+            {hash: 'a3'},
+            {hash: 'a4'},
+            {hash: 'a5'},
+            {hash: 'b1'},
+            {hash: 'b2'},
+            {hash: 'b3'},
+            {hash: 'b4'},
+            {hash: 'b5'},
+          ]);
 
         ctrl = $controller('BlockCtrl', []);
       }));
@@ -19,7 +30,23 @@
         expect(ctrl.blocks).toBeUndefined();
         $httpBackend.flush();
 
-        expect(ctrl.blocks).toEqual([{hash: '1234abcd'}, {hash: 'abcd1234'}]);
+        expect(ctrl.blocks).toEqual([
+          {hash: 'a1'},
+          {hash: 'a2'},
+          {hash: 'a3'},
+          {hash: 'a4'},
+          {hash: 'a5'},
+          {hash: 'b1'},
+          {hash: 'b2'},
+          {hash: 'b3'},
+          {hash: 'b4'},
+          {hash: 'b5'}
+        ]);
+
+        expect(ctrl.splitBlocks).toEqual([
+          [{hash: 'a1'}, {hash: 'a2'}, {hash: 'a3'}, {hash: 'a4'}, {hash: 'a5'}],
+          [{hash: 'b1'}, {hash: 'b2'}, {hash: 'b3'}, {hash: 'b4'}, {hash: 'b5'}]
+        ]);
       });
     });
   });
