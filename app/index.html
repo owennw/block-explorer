@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Block Chain Explorer</title>
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/app.css">
     <style>
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
@@ -13,19 +12,15 @@
 </head>
 <body ng-cloak>
 
-    <nav class="navbar navbar-default">
-        <div class="container">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Block Chain Explorer</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <label for="blockSearch">Search:</label>
-                        <input ng-model="search" placeholder="Hash, height or index" id="blockSearch">
-                    </li>
-                </ul>
-            </div><!--/.nav-collapse -->
+            <form class="form-inline navbar-form pull-right">
+                <input ng-model="search" placeholder="Hash, height or index" id="blockSearch">
+                <button class="btn btn-default" type="submit">Search</button>
+            </form>
         </div>
     </nav>
 

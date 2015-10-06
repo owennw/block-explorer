@@ -7,8 +7,9 @@
     var self = this;
 
     var callback = function(response) {
+      var numberOfColumns = 6;
       self.blocks = response;
-      self.splitBlocks = splitArray(response, 5);
+      self.splitBlocks = splitArray(response, numberOfColumns);
     }
 
     getBlocks($http, callback);

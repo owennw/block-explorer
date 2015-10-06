@@ -5,14 +5,18 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Height: {{block.height}}</th>
+                            <th>Block: {{block.height}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <strong>Bits</strong>: {{block.bits}}
-                                <strong>Version</strong>: {{block.version}}
+                                <strong>Transactions</strong>: {{block.tx.length}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <small><em>click for more details...</em></small>
                             </td>
                         </tr>
                     </tbody>

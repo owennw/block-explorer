@@ -16,11 +16,11 @@
             {hash: 'a3'},
             {hash: 'a4'},
             {hash: 'a5'},
+            {hash: 'a6'},
             {hash: 'b1'},
             {hash: 'b2'},
             {hash: 'b3'},
             {hash: 'b4'},
-            {hash: 'b5'},
           ]);
 
         ctrl = $controller('BlockCtrl', []);
@@ -36,21 +36,21 @@
           {hash: 'a3'},
           {hash: 'a4'},
           {hash: 'a5'},
+          {hash: 'a6'},
           {hash: 'b1'},
           {hash: 'b2'},
           {hash: 'b3'},
-          {hash: 'b4'},
-          {hash: 'b5'}
+          {hash: 'b4'}
         ]);
       });
 
-      it('should split the blocks into groups of 5', function() {
+      it('should split the blocks into groups of 6', function() {
         expect(ctrl.splitBlocks).toBeUndefined();
         $httpBackend.flush();
 
         expect(ctrl.splitBlocks).toEqual([
-          [{hash: 'a1'}, {hash: 'a2'}, {hash: 'a3'}, {hash: 'a4'}, {hash: 'a5'}],
-          [{hash: 'b1'}, {hash: 'b2'}, {hash: 'b3'}, {hash: 'b4'}, {hash: 'b5'}]
+          [{hash: 'a1'}, {hash: 'a2'}, {hash: 'a3'}, {hash: 'a4'}, {hash: 'a5'}, {hash: 'a6'}],
+          [{hash: 'b1'}, {hash: 'b2'}, {hash: 'b3'}, {hash: 'b4'}]
         ]);
       });
     });
