@@ -11,34 +11,13 @@
         }
     </style>
 </head>
-<body ng-controller="BlockCtrl as blockCtrl" ng-cloak>
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Block Chain Explorer</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>Search: <input ng-model="search" placeholder="Hash, height or index"></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
+<body ng-cloak>
 
-<div class="row" ng-repeat="blockRows in blockCtrl.splitBlocks">
-    <div class="col-md-2" ng-repeat="block in blockRows">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><strong>Height</strong>: {{block.height}}</h3>
-            </div>
-            <div class="panel-body">
-                <strong>Bits</strong>: {{block.bits}}
-            </div>
-        </div>
-    </div>
-</div>
+    <div ng-view></div>
 
     <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
 </body>
 </html>
