@@ -8,8 +8,8 @@
 
     var callback = function(response) {
       var numberOfColumns = 6;
-      self.blocks = response;
-      self.splitBlocks = splitArray(response, numberOfColumns);
+      self.blocks = response.data;
+      self.splitBlocks = splitArray(response.data, numberOfColumns);
     }
 
     getBlocks($http, 'blocks/blocks.json', callback);
@@ -24,13 +24,14 @@
       var self = this;
 
       self.height = $routeParams.blockHeight;
+
       getBlocks($http, 'blocks/block.json', function(response) {
-        self.block = response;
+        self.block = response.data;
       });
   }]);
 
   function getBlocks(http, url, callback) {
-    http.get(url).success(callback);
+    http.get(url).then(callback);
   }
 
   function splitArray(array, split) {
