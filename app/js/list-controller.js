@@ -1,33 +1,37 @@
 (function() {
   'use strict';
 
-  angular.module('blockChain.list', [])
-    .controller('BlockListCtrl', ['$http', function($http) {
+  angular.module('blockChain.list', ['blockChain.bitcoin'])
+    .controller('BlockListCtrl', ['$http', 'bitcoinService', function($http, bitcoinService) {
       var self = this;
+      self.blocks = [];
+      self.blockHeights = [];
+      var numberOfBlocksToFetch = 10;
 
-      var callback = function(response) {
-        var numberOfColumns = 6;
-        self.blocks = response.data;
-        self.splitBlocks = splitArray(response.data, numberOfColumns);
-      }
+      var sequence = Promise.resolve();
 
-      getBlocks($http, 'blocks/blocks.json', callback);
+      bitcoinService.fetchLatestBlock()
+        .then(function(block) {
+          self.blocks.push(block);
+          return block.height - 1;
+        })
+        .then(function(height) {
+          for (var i = 0; i < numberOfBlocksToFetch; i += 1) {
+            self.blockHeights.push(height - i);
+          }
+        })
+        .then(function() {
+          return self.blockHeights.reduce(function(sequence, height) {
+            return sequence.then(function() {
+              return bitcoinService.fetchBlock(height);
+            }).then(function(block) {
+                self.blocks.push(block);
+              });
+          }, Promise.resolve())
+        });
 
       self.loadPrevious = function() {
-        getBlocks($http, 'blocks/blocks.json', callback);
+        //getBlocks($http, 'blocks/blocks.json', callback);
       };
     }]);
-
-  function getBlocks(http, url, callback) {
-    http.get(url).then(callback);
-  }
-
-  function splitArray(array, split) {
-    var output = [];
-    for (var i = 0; i < array.length; i += split) {
-      output.push(array.slice(i, i + split));
-    }
-
-    return output;
-  }
 })();
