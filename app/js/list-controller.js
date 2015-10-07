@@ -17,9 +17,9 @@
         });
 
       self.loadPrevious = function() {
-        var nextHeight = self.blockHeights.slice(-1) - 1;
-        self.blockHeights = fetchHeights(nextHeight, numberOfBlocksToFetch);
-        fetchBlocks(self.blockHeights);
+        var nextBlockHash = self.blocks.slice(-1)[0].previousblockhash;
+        self.blocks = [];
+        fetchBlocks(nextBlockHash, numberOfBlocksToFetch);
       };
 
       function fetchHeights(current, quantity) {
