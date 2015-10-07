@@ -1,24 +1,11 @@
 <div class="container">
     <div class="row" ng-repeat="blockRows in blockListCtrl.splitBlocks">
-        <div class="col-md-2" ng-repeat="block in blockRows">
-            <a href="#/blocks/{{block.height}}" class="thumbnail" style="color:black">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Block: {{block.height}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Transactions: {{block.tx.length}}</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <small><em>click for more details...</em></small>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="col-lg-2 col-sm-4" ng-repeat="block in blockRows">
+            <a ng-href="#/blocks/{{block.height}}" class="thumbnail" style="color:black">
+                <div><h4>Block {{block.height}}</h4></div>
+                <hr style="margin:5px">
+                <div>Transactions: {{block.tx.length}}</div>
+                <div style="text-align:right; margin:10px"><small><em>click for more details...</em></small></div>
             </a>
         </div>
     </div>
