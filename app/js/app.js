@@ -1,12 +1,12 @@
 (function() {
   'use strict';
 
-  var blockChainExplorer = angular.module('blockChainExplorer', [
+  angular.module('blockChainExplorer', [
     'ngRoute',
-    'blockChainControllers'
-  ]);
-
-  blockChainExplorer.config(['$routeProvider',  function($routeProvider) {
+    'blockChain.list',
+    'blockChain.detail'
+  ])
+    .config(['$routeProvider',  function($routeProvider) {
     $routeProvider
       .when('/blocks', {
         templateUrl: 'partials/block-list.html',
@@ -22,5 +22,4 @@
         redirectTo: '/blocks'
       });
   }]);
-
 })();

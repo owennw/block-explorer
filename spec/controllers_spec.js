@@ -6,7 +6,7 @@
     describe('BlockListCtrl', function() {
       var ctrl, $httpBackend;
 
-      beforeEach(module('blockChainControllers'));
+      beforeEach(module('blockChain.list'));
       beforeEach(inject(function(_$httpBackend_, $controller) {
         $httpBackend = _$httpBackend_;
         $httpBackend.expectGET('blocks/blocks.json')
