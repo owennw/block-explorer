@@ -5,19 +5,15 @@
     .controller('BlockListCtrl', ['$http', 'bitcoinService', function($http, bitcoinService) {
       var self = this;
       self.blocks = [];
-      self.blockHeights = [];
       var numberOfBlocksToFetch = 12;
 
       bitcoinService.fetchLatestBlock()
         .then(function(block) {
-          return block.height;
+          self.blocks.push(block);
+          return block.previousblockhash;
         })
-        .then(function(height) {
-          self.blockHeights = fetchHeights(height, numberOfBlocksToFetch);
-        })
-        .then(function() {
-          self.blocks= [];
-          fetchBlocks(self.blockHeights);
+        .then(function(previousHash) {
+          fetchBlocks(previousHash, numberOfBlocksToFetch - 1);
         });
 
       self.loadPrevious = function() {
@@ -35,15 +31,15 @@
         return output;
       }
 
-      function fetchBlocks(heights) {
-        if (heights.length === 0) {
+      function fetchBlocks(hash, count) {
+        if (count === 0) {
           return;
         }
 
-        bitcoinService.fetchBlock(heights.shift())
+        bitcoinService.fetchBlock(hash)
           .then(function(block) {
             self.blocks.push(block);
-            fetchBlocks(heights);
+            fetchBlocks(block.previousblockhash, count - 1);
           });
       }
     }]);
