@@ -13,7 +13,7 @@
         controller: 'BlockListCtrl',
         controllerAs: 'blockListCtrl'
       })
-      .when('/blocks/:blockHeight', {
+      .when('/blocks/:blockHash', {
         templateUrl: 'partials/block-detail.html',
         controller: 'BlockDetailCtrl',
         controllerAs: 'blockDetailCtrl'

@@ -6,9 +6,9 @@
       function($http, $routeParams, bitcoinService) {
         var self = this;
 
-        self.height = $routeParams.blockHeight;
+        self.blockHash = $routeParams.blockHash;
 
-        bitcoinService.fetchBlock(self.height)
+        bitcoinService.fetchBlock(self.blockHash)
           .then(function(block) {
             self.block = block;
           });

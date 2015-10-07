@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-2 col-sm-4" ng-repeat="block in blockListCtrl.blocks">
-            <a ng-href="#/blocks/{{block.height}}" class="thumbnail" style="color:black">
+            <a ng-href="#/blocks/{{block.hash}}" class="thumbnail" style="color:black">
                 <div><h4>Block {{block.height}}</h4></div>
                 <hr>
                 <div>Transactions: {{block.tx.length}}</div>
