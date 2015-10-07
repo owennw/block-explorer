@@ -1,19 +1,16 @@
 (function() {
   'use strict';
 
-  angular.module('blockChain.detail', [])
-    .controller('BlockDetailCtrl', ['$http', '$routeParams',
-      function($http, $routeParams) {
+  angular.module('blockChain.detail', ['blockChain.bitcoin'])
+    .controller('BlockDetailCtrl', ['$http', '$routeParams', 'bitcoinService',
+      function($http, $routeParams, bitcoinService) {
         var self = this;
 
         self.height = $routeParams.blockHeight;
 
-        getBlocks($http, 'blocks/block.json', function(response) {
-          self.block = response.data;
-        });
+        bitcoinService.fetchBlock(self.height)
+          .then(function(block) {
+            self.block = block;
+          });
       }]);
-
-  function getBlocks(http, url, callback) {
-    http.get(url).then(callback);
-  }
 })();
