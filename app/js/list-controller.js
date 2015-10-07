@@ -6,42 +6,45 @@
       var self = this;
       self.blocks = [];
       self.blockHeights = [];
-      var numberOfBlocksToFetch = 10;
+      var numberOfBlocksToFetch = 12;
 
       bitcoinService.fetchLatestBlock()
         .then(function(block) {
-          self.blocks.push(block);
-          return block.height - 1;
+          return block.height;
         })
         .then(function(height) {
-          self.blockHeights = fetchPreviousBlocks(height, numberOfBlocksToFetch);
+          self.blockHeights = fetchHeights(height, numberOfBlocksToFetch);
         })
         .then(function() {
-          return fetchBlocks(self.blockHeights)
+          self.blocks= [];
+          fetchBlocks(self.blockHeights);
         });
 
       self.loadPrevious = function() {
         var nextHeight = self.blockHeights.slice(-1) - 1;
-
+        self.blockHeights = fetchHeights(nextHeight, numberOfBlocksToFetch);
+        fetchBlocks(self.blockHeights);
       };
 
-      function fetchPreviousBlocks(current, quantity) {
+      function fetchHeights(current, quantity) {
         var output = [];
-        for (var i = 0; i < quantity; i += 1) {
+        for (var i = 0; i < quantity; i++) {
           output.push(current - i);
         }
 
         return output;
       }
 
-      function fetchBlocks(heights, sequence) {
-        return heights.reduce(function(sequence, height) {
-          return sequence.then(function() {
-            return bitcoinService.fetchBlock(height);
-          }).then(function(block) {
+      function fetchBlocks(heights) {
+        if (heights.length === 0) {
+          return;
+        }
+
+        bitcoinService.fetchBlock(heights.shift())
+          .then(function(block) {
             self.blocks.push(block);
+            fetchBlocks(heights);
           });
-        }, Promise.resolve());
       }
     }]);
 })();
