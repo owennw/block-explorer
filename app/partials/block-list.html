@@ -3,9 +3,9 @@
         <div class="col-lg-2 col-sm-4" ng-repeat="block in blockRows">
             <a ng-href="#/blocks/{{block.height}}" class="thumbnail" style="color:black">
                 <div><h4>Block {{block.height}}</h4></div>
-                <hr style="margin:5px">
+                <hr>
                 <div>Transactions: {{block.tx.length}}</div>
-                <div style="text-align:right; margin:10px"><small><em>click for more details...</em></small></div>
+                <div id="moredetails">click for more details...</div>
             </a>
         </div>
     </div>
