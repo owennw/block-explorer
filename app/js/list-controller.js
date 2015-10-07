@@ -8,30 +8,40 @@
       self.blockHeights = [];
       var numberOfBlocksToFetch = 10;
 
-      var sequence = Promise.resolve();
-
       bitcoinService.fetchLatestBlock()
         .then(function(block) {
           self.blocks.push(block);
           return block.height - 1;
         })
         .then(function(height) {
-          for (var i = 0; i < numberOfBlocksToFetch; i += 1) {
-            self.blockHeights.push(height - i);
-          }
+          self.blockHeights = fetchPreviousBlocks(height, numberOfBlocksToFetch);
         })
         .then(function() {
-          return self.blockHeights.reduce(function(sequence, height) {
-            return sequence.then(function() {
-              return bitcoinService.fetchBlock(height);
-            }).then(function(block) {
-                self.blocks.push(block);
-              });
-          }, Promise.resolve())
+          return fetchBlocks(self.blockHeights)
         });
 
       self.loadPrevious = function() {
-        //getBlocks($http, 'blocks/blocks.json', callback);
+        var nextHeight = self.blockHeights.slice(-1) - 1;
+
       };
+
+      function fetchPreviousBlocks(current, quantity) {
+        var output = [];
+        for (var i = 0; i < quantity; i += 1) {
+          output.push(current - i);
+        }
+
+        return output;
+      }
+
+      function fetchBlocks(heights, sequence) {
+        return heights.reduce(function(sequence, height) {
+          return sequence.then(function() {
+            return bitcoinService.fetchBlock(height);
+          }).then(function(block) {
+            self.blocks.push(block);
+          });
+        }, Promise.resolve());
+      }
     }]);
 })();
