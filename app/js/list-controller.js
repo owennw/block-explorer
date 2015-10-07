@@ -22,15 +22,6 @@
         fetchBlocks(nextBlockHash, numberOfBlocksToFetch);
       };
 
-      function fetchHeights(current, quantity) {
-        var output = [];
-        for (var i = 0; i < quantity; i++) {
-          output.push(current - i);
-        }
-
-        return output;
-      }
-
       function fetchBlocks(hash, count) {
         if (count === 0) {
           return;
