@@ -2,11 +2,18 @@
   'use strict';
 
   angular.module('blockChain.bitcoin', [])
-    .factory('bitcoinService', ['$http', function($http) {
+    .factory('bitcoinService', ['$http', '$q', function($http, $q) {
       var baseUrl = 'https://blockexplorer.com/api/';
+      var cache = {};
 
       function fetchBlock(hash) {
-        return fetch('block/' + hash);
+        if (cache[hash]) {
+          var deferred = $q.defer();
+          deferred.resolve(cache[hash]);
+          return deferred.promise;
+        }
+
+        return fetch('block/' + hash, hash);
       }
 
       function fetchLatestBlock() {
@@ -27,9 +34,13 @@
           });
       }
 
-      function fetch(urlFragment) {
+      function fetch(urlFragment, hash) {
         return $http.get(baseUrl + urlFragment)
           .then(function(response) {
+            if (hash) {
+              cache[hash] = response.data;
+            }
+
             return response.data;
           }, function(response) {
             return Error(response.message);

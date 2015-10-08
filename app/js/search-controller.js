@@ -2,14 +2,16 @@
   'use strict';
 
   angular.module('blockChain.search', ['blockChain.bitcoin'])
-    .controller('SearchCtrl', ['$http', '$routeParams', '$location', 'bitcoinService',
-      function($http, $routeParams, $location, bitcoinService) {
+    .controller('SearchCtrl', ['$http', '$q', '$routeParams', '$location', 'bitcoinService',
+      function($http, $q, $routeParams, $location, bitcoinService) {
         var self = this;
         self.query = $routeParams.query;
 
         function getHash() {
           if (isHash(self.query)) {
-            return Promise.resolve(self.query);
+            var deferred = $q.defer();
+            deferred.resolve(self.query);
+            return deferred.promise;
           } else if(isHeight(self.query)) {
             return bitcoinService.fetchHash(self.query)
               .then(function(hash) {
