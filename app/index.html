@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Block Chain Explorer</title>
-    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css"
+          href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/app.css" />
     <style>
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -19,7 +20,10 @@
         </div>
         <form class="form-inline navbar-form pull-right">
             <input ng-model="searchCtrl.query" placeholder="Hash, height or index">
-            <a href="#/search/{{searchCtrl.query}}" class="btn btn-default" ng-click="searchCtrl.submit()" type="submit">Search</a>
+            <a href="#/search/{{searchCtrl.query}}" class="btn btn-default"
+               ng-click="searchCtrl.submit()" type="submit">
+                Search
+            </a>
         </form>
     </nav>
 
