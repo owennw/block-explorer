@@ -1,4 +1,12 @@
 <div class="container">
+    <button type="button" class="btn btn-default pull-right"
+            ng-disabled="blockDetailCtrl.nextDisabled" ng-click="blockDetailCtrl.next()">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Next
+    </button>
+    <button type="button" class="btn btn-default pull-right"
+            ng-disabled="blockDetailCtrl.previousDisabled" ng-click="blockDetailCtrl.previous()">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous
+    </button>
     <table class="table table-striped">
         <thead>
             <tr><th colspan="2">Bitcoin Block</th></tr>
