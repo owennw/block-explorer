@@ -9,24 +9,43 @@
         self.message = 'Searching...';
 
         function getHash() {
+          var deferred;
           if (isHash(self.query)) {
-            var deferred = $q.defer();
-            deferred.resolve(self.query);
+            deferred = $q.defer();
+            deferred.resolve({
+              hash: self.query,
+              error: false
+            });
             return deferred.promise;
           } else if(isHeight(self.query)) {
             return bitcoinService.fetchHash(self.query)
               .then(function(hash) {
-                return hash;
+                return {
+                  hash: hash,
+                  error: false
+                };
               })
           } else {
             // Invalid search input
+            deferred = $q.defer();
+            deferred.resolve({
+              hash: self.query,
+              error: true
+            });
+            return deferred.promise;
           }
         }
 
         this.submit = function() {
           getHash()
-            .then(function(hash) {
-              $location.path('/blocks/' + hash);
+            .then(function(hashObject) {
+              if (hashObject.error) {
+                self.message = 'Input ' + hashObject.hash + ' not a valid hash or height.'
+                self.query = '';
+                return;
+              }
+
+              $location.path('/blocks/' + hashObject.hash);
               self.query = '';
             });
         };
