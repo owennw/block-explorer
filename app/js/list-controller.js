@@ -7,12 +7,20 @@
       self.blocks = [];
       self.viewOptions = [6, 10, 12, 18, 24, 48];
       self.viewNumber = 12;
+      self.currentHash = '';
+      self.displaying = false;
+
+      self.currentFetchMessage = function() {
+        return 'Fetching block ' + self.currentHash;
+      };
 
       display();
 
       function display() {
+        self.displaying = true;
         bitcoinService.fetchLatestBlock()
           .then(function (block) {
+            self.currentHash = block.hash;
             self.blocks.push(block);
             setMined(block);
             return block.previousblockhash;
@@ -34,7 +42,9 @@
       };
 
       function fetchBlocks(hash, count) {
+        self.currentHash = hash;
         if (count === 0) {
+          self.displaying = false;
           return;
         }
 
