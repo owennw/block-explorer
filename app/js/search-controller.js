@@ -6,6 +6,7 @@
       function($http, $q, $routeParams, $location, bitcoinService) {
         var self = this;
         self.query = $routeParams.query;
+        self.message = 'Searching...';
 
         function getHash() {
           if (isHash(self.query)) {

@@ -18,10 +18,9 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#/">Block Chain Explorer</a>
         </div>
-        <form class="form-inline navbar-form pull-right">
+        <form class="form-inline navbar-form pull-right" ng-submit="searchCtrl.submit()">
             <input ng-model="searchCtrl.query" placeholder="Hash, height or index">
-            <a href="#/search/{{searchCtrl.query}}" class="btn btn-default"
-               ng-click="searchCtrl.submit()" type="submit">
+            <a href="#/search/{{searchCtrl.query}}" class="btn btn-default" type="submit">
                 Search
             </a>
         </form>
