@@ -6,28 +6,42 @@
       var baseUrl = 'https://blockexplorer.com/api/';
 
       function fetchBlock(hash) {
-        return $http.get(baseUrl + 'block/' + hash)
+        return fetch('block/' + hash);
+      }
+
+      function fetch(urlFragment) {
+        return $http.get(baseUrl + urlFragment)
           .then(function(response) {
             return response.data;
           }, function(response) {
-            return Error(response.message);
-          });
+          return Error(response.message);
+        });
       }
 
       function fetchLatestBlock() {
         return fetchLatestHash().then(fetchBlock);
       }
 
-      function fetchLatestHash() {
-        return $http.get(baseUrl + 'status?q=getLastBlockHash')
+      function fetchHash(height) {
+        return $http.get(baseUrl + 'block-index/' + height)
           .then(function(response) {
-            return response.data.lastblockhash;
-        })
+            return response.data.blockHash;
+          }, function(response) {
+            return Error(response.message);
+          });
+      }
+
+      function fetchLatestHash() {
+        return fetch('status?q=getLastBlockHash')
+          .then(function(data) {
+            return data.lastblockhash;
+          });
       }
 
       return {
         fetchLatestBlock: fetchLatestBlock,
-        fetchBlock: fetchBlock
+        fetchBlock: fetchBlock,
+        fetchHash: fetchHash
       };
     }]);
 })();
