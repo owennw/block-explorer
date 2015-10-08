@@ -1,13 +1,10 @@
 <div class="container" style="padding:15px">
     <form class="pull-right">
         <label for="viewNumber" style="font-weight: normal">View</label>
-        <select id="viewNumber">
-            <option>6</option>
-            <option>10</option>
-            <option>12</option>
-            <option>16</option>
-            <option>24</option>
-            <option>40</option>
+        <select id="viewNumber"
+                ng-options="quantity for quantity in blockListCtrl.viewOptions"
+                ng-model="blockListCtrl.viewNumber"
+                ng-change="blockListCtrl.viewChanged()">
         </select>
         blocks
     </form>
