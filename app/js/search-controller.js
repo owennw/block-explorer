@@ -5,6 +5,7 @@
     .controller('SearchCtrl', ['$http', '$routeParams', '$location', 'bitcoinService',
       function($http, $routeParams, $location, bitcoinService) {
         var self = this;
+        self.query = $routeParams.query;
 
         function getHash() {
           if (isHash(self.query)) {
@@ -26,6 +27,11 @@
               self.query = '';
             });
         };
+
+        if(self.query) {
+          // Here to prevent navigating back to view dirty data
+          this.submit();
+        }
 
         function isHash(input) {
           if (input.length !== 64) {
