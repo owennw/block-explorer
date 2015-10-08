@@ -47,13 +47,7 @@
       }
 
       function setMined(block) {
-        var date = new Date(block.time * 1000);
-        var options = {
-          year: 'numeric', month: 'short', day: 'numeric',
-          hour: '2-digit', minute: '2-digit'
-        };
-
-        block.mined = date.toLocaleDateString('en-GB', options);
+        block.mined = new Date(block.time * 1000);
       }
     }]);
 })();

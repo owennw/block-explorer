@@ -17,7 +17,7 @@
                 <div><h4>Block {{block.height}}</h4></div>
                 <hr>
                 <div>Transactions: {{block.tx.length}}</div>
-                <div>Mined at: {{block.mined}}</div>
+                <div>Mined at: {{block.mined | date:'HH:mm:ss, dd MMM yyyy'}}</div>
                 <div id="moredetails">click for more details...</div>
             </a>
         </div>
