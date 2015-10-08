@@ -5,7 +5,7 @@
     .controller('BlockListCtrl', ['$http', 'bitcoinService', function($http, bitcoinService) {
       var self = this;
       self.blocks = [];
-      self.viewOptions = [6, 10, 12, 16, 24, 48];
+      self.viewOptions = [6, 10, 12, 18, 24, 48];
       self.viewNumber = 12;
 
       display();
@@ -14,6 +14,7 @@
         bitcoinService.fetchLatestBlock()
           .then(function (block) {
             self.blocks.push(block);
+            setMined(block);
             return block.previousblockhash;
           })
           .then(function (previousHash) {
@@ -39,9 +40,16 @@
 
         bitcoinService.fetchBlock(hash)
           .then(function(block) {
+            setMined(block);
             self.blocks.push(block);
             fetchBlocks(block.previousblockhash, count - 1);
           });
+      }
+
+      function setMined(block) {
+        var d = new Date(block.time * 1000);
+        block.mined = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' +
+          d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       }
     }]);
 })();
