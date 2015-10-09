@@ -31,7 +31,7 @@
                 <div><h4>Block {{block.height}}</h4></div>
                 <hr>
                 <p>Transactions: <span class="pull-right">{{block.tx.length}}</span></p>
-                <p>Mined: <span class="pull-right">{{block.mined | date:'HH:mm:ss, d MMM yyyy'}}</span></p>
+                <p>Mined: <span class="pull-right">{{block.mined | momentFilter}}</span></p>
                 <div id="moredetails">more...</div>
             </a>
         </div>

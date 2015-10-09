@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
-  angular.module('blockChain.list', ['angular-storage', 'blockChain.bitcoin'])
+  angular.module('blockChain.list', [
+    'angular-storage', 'blockChain.bitcoin', 'blockChain.momentFilter'
+  ])
     .controller('BlockListCtrl', [
       '$http',
       'store',
