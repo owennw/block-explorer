@@ -24,7 +24,9 @@
         return fetch('block-index/' + height)
           .then(function(data) {
             return data.blockHash;
-          });
+          }, function(err) {
+            throw 'Cannot retrieve hash for height \'' + height + '\'';
+          })
       }
 
       function fetchLatestHash() {
@@ -42,8 +44,8 @@
             }
 
             return response.data;
-          }, function(response) {
-            return Error(response.message);
+          }, function(err) {
+            throw 'Cannot find block with hash \'' + hash + '\'';
           });
       }
 

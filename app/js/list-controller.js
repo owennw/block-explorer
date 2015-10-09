@@ -25,7 +25,7 @@
         self.displaying = false;
         var processedBlocks = 0;
 
-        self.width = function() {
+        self.progressPercentage = function() {
           return processedBlocks / self.viewNumber * 100;
         };
 

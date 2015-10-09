@@ -1,77 +1,79 @@
-<div class="container">
-    <button type="button" class="btn btn-default pull-right"
-            ng-disabled="blockDetailCtrl.nextDisabled" ng-click="blockDetailCtrl.next()">
-        Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    </button>
-    <button type="button" class="btn btn-default pull-right"
-            ng-disabled="blockDetailCtrl.previousDisabled" ng-click="blockDetailCtrl.previous()">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous
-    </button>
-    <table class="table table-striped">
-        <thead>
-            <tr><th colspan="2">Bitcoin Block</th></tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Hash</td>
-                <td>{{blockDetailCtrl.block.hash}}</td>
-            </tr>
-            <tr>
-                <td>Height</td>
-                <td>{{blockDetailCtrl.block.height}}</td>
-            </tr>
-            <tr>
-                <td>Confirmations</td>
-                <td>{{blockDetailCtrl.block.confirmations}}</td>
-            </tr>
-            <tr>
-                <td>Size</td>
-                <td>{{blockDetailCtrl.block.size}}</td>
-            </tr>
-            <tr>
-                <td>Version</td>
-                <td>{{blockDetailCtrl.block.version}}</td>
-            </tr>
-            <tr>
-                <td>Merkleroot</td>
-                <td>{{blockDetailCtrl.block.merkleroot}}</td>
-            </tr>
-            <tr>
-                <td>Time</td>
-                <td>{{blockDetailCtrl.block.time}}</td>
-            </tr>
-            <tr>
-                <td>Nonce</td>
-                <td>{{blockDetailCtrl.block.nonce}}</td>
-            </tr>
-            <tr>
-                <td>Bits</td>
-                <td>{{blockDetailCtrl.block.bits}}</td>
-            </tr>
-            <tr>
-                <td>Difficulty</td>
-                <td>{{blockDetailCtrl.block.difficulty}}</td>
-            </tr>
-            <tr>
-                <td>Reward</td>
-                <td>{{blockDetailCtrl.block.reward}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<div class="container" ng-show="blockDetailCtrl.success">
+    <div class="container">
+        <button type="button" class="btn btn-default pull-right"
+                ng-disabled="blockDetailCtrl.nextDisabled" ng-click="blockDetailCtrl.next()">
+            Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default pull-right"
+                ng-disabled="blockDetailCtrl.previousDisabled" ng-click="blockDetailCtrl.previous()">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous
+        </button>
+        <table class="table table-striped">
+            <thead>
+                <tr><th colspan="2">Bitcoin Block</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hash</td>
+                    <td>{{blockDetailCtrl.block.hash}}</td>
+                </tr>
+                <tr>
+                    <td>Height</td>
+                    <td>{{blockDetailCtrl.block.height}}</td>
+                </tr>
+                <tr>
+                    <td>Confirmations</td>
+                    <td>{{blockDetailCtrl.block.confirmations}}</td>
+                </tr>
+                <tr>
+                    <td>Size</td>
+                    <td>{{blockDetailCtrl.block.size}}</td>
+                </tr>
+                <tr>
+                    <td>Version</td>
+                    <td>{{blockDetailCtrl.block.version}}</td>
+                </tr>
+                <tr>
+                    <td>Merkleroot</td>
+                    <td>{{blockDetailCtrl.block.merkleroot}}</td>
+                </tr>
+                <tr>
+                    <td>Time</td>
+                    <td>{{blockDetailCtrl.block.time}}</td>
+                </tr>
+                <tr>
+                    <td>Nonce</td>
+                    <td>{{blockDetailCtrl.block.nonce}}</td>
+                </tr>
+                <tr>
+                    <td>Bits</td>
+                    <td>{{blockDetailCtrl.block.bits}}</td>
+                </tr>
+                <tr>
+                    <td>Difficulty</td>
+                    <td>{{blockDetailCtrl.block.difficulty}}</td>
+                </tr>
+                <tr>
+                    <td>Reward</td>
+                    <td>{{blockDetailCtrl.block.reward}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-            <th>Transactions</th>
-            <th>{{blockDetailCtrl.block.tx.length}}</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="transaction in blockDetailCtrl.block.tx">
-          <td>{{transaction}}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+                <th>Transactions</th>
+                <th>{{blockDetailCtrl.block.tx.length}}</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="transaction in blockDetailCtrl.block.tx">
+              <td>{{transaction}}</td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
 </div>

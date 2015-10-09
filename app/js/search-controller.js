@@ -6,53 +6,61 @@
       function($http, $q, $routeParams, $location, bitcoinService) {
         var self = this;
         self.query = $routeParams.query;
-        self.message = 'Searching...';
+
+        var alertType = 'alert-info';
+        self.alertType = function() {
+          return alertType;
+        };
+
+        var messageBody = 'Searching for block...';
+        self.message = function() {
+          return messageBody;
+        };
 
         function getHash() {
           var deferred;
           if (isHash(self.query)) {
             deferred = $q.defer();
-            deferred.resolve({
-              hash: self.query,
-              error: false
-            });
+            deferred.resolve(self.query);
             return deferred.promise;
           } else if(isHeight(self.query)) {
             return bitcoinService.fetchHash(self.query)
               .then(function(hash) {
-                return {
-                  hash: hash,
-                  error: false
-                };
+                  return hash;
+              }, function(err) {
+                throw err;
               })
           } else {
             // Invalid search input
             deferred = $q.defer();
-            deferred.resolve({
-              hash: self.query,
-              error: true
-            });
+            deferred.reject('Input \'' + self.query + '\' is not a valid hash or height.');
             return deferred.promise;
           }
         }
 
         this.submit = function() {
           getHash()
-            .then(function(hashObject) {
-              if (hashObject.error) {
-                self.message = 'Input ' + hashObject.hash + ' not a valid hash or height.'
-                self.query = '';
-                return;
-              }
+            .then(function(hash) {
+              bitcoinService.fetchBlock(hash)
+                .then(function() {
+                  $location.path('/blocks/' + hash);
+                }, function(err) {
+                  handleError(err);
+                });
 
-              $location.path('/blocks/' + hashObject.hash);
-              self.query = '';
+            }, function(err) {
+              handleError(err);
             });
         };
 
         if(self.query) {
           // Here to prevent navigating back to view dirty data
           this.submit();
+        }
+
+        function handleError(err) {
+          messageBody = err;
+          alertType = 'alert-danger';
         }
 
         function isHash(input) {
@@ -63,6 +71,7 @@
           var match = input.match(/^[a-f0-9]{64}$/);
 
           if(match) {
+            messageBody = 'Fetching block with hash \'' + input + '\'';
             return true;
           } else {
             return false;
@@ -73,6 +82,7 @@
           var match = input.match(/^[0-9]+$/);
 
           if(match) {
+            messageBody = 'Fetching block with height \'' + input + '\'';
             return true;
           } else {
             return false;
