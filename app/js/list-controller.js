@@ -8,7 +8,12 @@
       self.viewOptions = [6, 10, 12, 18, 24, 48];
       self.viewNumber = 12;
       self.currentHash = '';
+      self.processedBlocks = 0;
       self.displaying = false;
+
+      self.width = function() {
+        return 10;
+      };
 
       self.currentFetchMessage = function() {
         return 'Fetching block ' + self.currentHash;
