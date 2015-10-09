@@ -5,7 +5,7 @@ module.exports = function(config){
 
     files : [
       'app/node_modules/angular/angular.js',
-      'app/node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/angular-mocks/angular-mocks.js',
       'app/js/**/*.js',
       'spec/**/*.js'
     ],
