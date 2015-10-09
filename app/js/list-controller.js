@@ -2,8 +2,16 @@
   'use strict';
 
   angular.module('blockChain.list', [
-    'angular-storage', 'blockChain.bitcoin', 'blockChain.momentFilter'
+    'angular-storage', 'blockChain.bitcoin', 'blockChain.momentFilters'
   ])
+    .directive('hover', function() {
+      return {
+        restrict: 'A',
+        link: function(element) {
+          $(element).tooltip();
+        }
+      };
+    })
     .controller('BlockListCtrl', [
       '$http',
       'store',

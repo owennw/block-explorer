@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('blockChain.momentFilter', [])
+  angular.module('blockChain.momentFilters', [])
     .filter('momentFilter', function() {
       return function(date) {
         var instant = moment(date);
@@ -17,6 +17,12 @@
               lastWeek: 'ddd D MMM YYYY H:mm'
             });
         }
+      };
+    })
+    .filter('tooltipFilter', function() {
+      return function (date) {
+        var instant = moment(date);
+        return instant.format('ddd D MMM YYYY H:mm:ss');
       };
     });
 })();

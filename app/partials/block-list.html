@@ -27,7 +27,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-2 col-sm-4" ng-repeat="block in blockListCtrl.blocks">
-            <a ng-href="#/blocks/{{block.hash}}" class="thumbnail" style="color:black">
+            <a ng-href="#/blocks/{{block.hash}}" class="thumbnail" style="color:black"
+                    data-toggle title="{{block.mined | tooltipFilter}}">
                 <div><h4>Block {{block.height}}</h4></div>
                 <hr>
                 <p>Transactions: <span class="pull-right">{{block.tx.length}}</span></p>
