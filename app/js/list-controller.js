@@ -8,11 +8,11 @@
       self.viewOptions = [6, 10, 12, 18, 24, 48];
       self.viewNumber = 12;
       self.currentHash = '';
-      self.processedBlocks = 0;
       self.displaying = false;
+      var processedBlocks = 0;
 
       self.width = function() {
-        return 10;
+        return processedBlocks / self.viewNumber * 100;
       };
 
       self.currentFetchMessage = function() {
@@ -27,6 +27,7 @@
           .then(function (block) {
             self.currentHash = block.hash;
             self.blocks.push(block);
+            self.processedBlocks++;
             setMined(block);
             return block.previousblockhash;
           })
@@ -43,6 +44,7 @@
 
       self.viewChanged = function() {
         self.blocks = [];
+        processedBlocks = 0;
         display();
       };
 
@@ -57,6 +59,7 @@
           .then(function(block) {
             setMined(block);
             self.blocks.push(block);
+            processedBlocks++;
             fetchBlocks(block.previousblockhash, count - 1);
           });
       }
