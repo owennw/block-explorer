@@ -1,13 +1,13 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('blockChain.list', [
     'angular-storage', 'blockChain.bitcoin', 'blockChain.momentFilters'
   ])
-    .directive('hover', function() {
+    .directive('hover', function () {
       return {
         restrict: 'A',
-        link: function(element) {
+        link: function (element) {
           $(element).tooltip();
         }
       };
@@ -16,7 +16,7 @@
       '$http',
       'store',
       'bitcoinService',
-      function($http, store, bitcoinService) {
+      function ($http, store, bitcoinService) {
         var self = this;
         self.blocks = [];
         self.viewOptions = [6, 10, 12, 18, 24, 48];
@@ -25,11 +25,11 @@
         self.displaying = false;
         var processedBlocks = 0;
 
-        self.progressPercentage = function() {
+        self.progressPercentage = function () {
           return processedBlocks / self.viewNumber * 100;
         };
 
-        self.currentFetchMessage = function() {
+        self.currentFetchMessage = function () {
           return 'Fetching block ' + self.currentHash;
         };
 
@@ -50,13 +50,13 @@
             });
         }
 
-        self.loadPrevious = function() {
+        self.loadPrevious = function () {
           var nextBlockHash = self.blocks.slice(-1)[0].previousblockhash;
           self.blocks = [];
           fetchBlocks(nextBlockHash, self.viewNumber);
         };
 
-        self.viewChanged = function() {
+        self.viewChanged = function () {
           self.blocks = [];
           store.set('viewNumber', self.viewNumber);
           processedBlocks = 0;
@@ -71,7 +71,7 @@
           }
 
           bitcoinService.fetchBlock(hash)
-            .then(function(block) {
+            .then(function (block) {
               setMined(block);
               self.blocks.push(block);
               processedBlocks++;
@@ -82,5 +82,6 @@
         function setMined(block) {
           block.mined = new Date(block.time * 1000);
         }
-      }]);
-})();
+      }
+    ]);
+}());

@@ -1,3 +1,6 @@
 node_modules/
 .idea/
 spec/
+.vs/
+Web.config
+block-explorer/

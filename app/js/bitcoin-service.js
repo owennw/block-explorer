@@ -1,8 +1,8 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('blockChain.bitcoin', [])
-    .factory('bitcoinService', ['$http', '$q', function($http, $q) {
+    .factory('bitcoinService', ['$http', '$q', function ($http, $q) {
       var baseUrl = 'https://blockexplorer.com/api/';
       var cache = {};
 
@@ -22,29 +22,29 @@
 
       function fetchHash(height) {
         return fetch('block-index/' + height)
-          .then(function(data) {
+          .then(function (data) {
             return data.blockHash;
-          }, function(err) {
+          }, function () {
             throw 'Cannot retrieve hash for height \'' + height + '\'';
-          })
+          });
       }
 
       function fetchLatestHash() {
         return fetch('status?q=getLastBlockHash')
-          .then(function(data) {
+          .then(function (data) {
             return data.lastblockhash;
           });
       }
 
       function fetch(urlFragment, hash) {
         return $http.get(baseUrl + urlFragment)
-          .then(function(response) {
+          .then(function (response) {
             if (hash) {
               cache[hash] = response.data;
             }
 
             return response.data;
-          }, function(err) {
+          }, function () {
             throw 'Cannot find block with hash \'' + hash + '\'';
           });
       }
@@ -55,4 +55,4 @@
         fetchHash: fetchHash
       };
     }]);
-})();
+}());

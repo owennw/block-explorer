@@ -1,9 +1,9 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('blockChain.momentFilters', [])
-    .filter('momentFilter', function() {
-      return function(date) {
+    .filter('momentFilter', function () {
+      return function (date) {
         var instant = moment(date);
         var now = moment();
         var offset = now.diff(instant, 'minutes');
@@ -19,10 +19,10 @@
         }
       };
     })
-    .filter('tooltipFilter', function() {
+    .filter('tooltipFilter', function () {
       return function (date) {
         var instant = moment(date);
         return instant.format('ddd D MMM YYYY H:mm:ss');
       };
     });
-})();
+}());
