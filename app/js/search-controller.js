@@ -44,7 +44,7 @@
             .then(function (hash) {
               bitcoinService.fetchBlock(hash)
                 .then(function () {
-                  $location.path('/blocks/' + hash);
+                  $location.path('/block/' + hash);
                 }, function (err) {
                   handleError(err);
                 });

@@ -9,12 +9,15 @@
   ])
     .config(['$routeProvider', function ($routeProvider) {
       $routeProvider
+        .when('/', {
+          redirectTo: 'blocks'
+        })
         .when('/blocks', {
           templateUrl: 'partials/block-list.html',
           controller: 'BlockListCtrl',
           controllerAs: 'blockListCtrl'
         })
-        .when('/blocks/:blockHash', {
+        .when('/block/:blockHash', {
           templateUrl: 'partials/block-detail.html',
           controller: 'BlockDetailCtrl',
           controllerAs: 'blockDetailCtrl'
@@ -24,8 +27,15 @@
           controller: 'SearchCtrl',
           controllerAs: 'searchCtrl'
         })
+        .when('/block/:blockHash/tx/:tx', {
+          templateUrl: 'partials/transaction-graph.html',
+          controller: 'TransactionCtrl',
+          controllerAs: 'transactionCtrl'
+        })
         .otherwise({
-          redirectTo: '/blocks'
+          redirectTo: function () {
+            window.location = '404.html';
+          }
         });
     }]);
 }());

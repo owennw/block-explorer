@@ -25,7 +25,7 @@
           .then(function (data) {
             return data.blockHash;
           }, function () {
-            throw 'Cannot retrieve hash for height \'' + height + '\'';
+            throw new Error('Cannot retrieve hash for height \'' + height + '\'');
           });
       }
 
@@ -45,7 +45,7 @@
 
             return response.data;
           }, function () {
-            throw 'Cannot find block with hash \'' + hash + '\'';
+            throw new Error('Cannot find block with hash \'' + hash + '\'');
           });
       }
 

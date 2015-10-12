@@ -2,7 +2,8 @@
   "globals": {
     "$": false,
     "angular": false,
-    "moment": false
+    "moment": false,
+    "window":  false
   },
   "env": {
     "node": true

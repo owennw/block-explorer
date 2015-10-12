@@ -71,7 +71,7 @@
           </thead>
           <tbody>
           <tr ng-repeat="transaction in blockDetailCtrl.block.tx">
-              <td>{{transaction}}</td>
+              <td><a ng-href="#/block/{{blockDetailCtrl.block.hash}}/tx/{{transaction}}">{{transaction}}</a></td>
           </tr>
           </tbody>
         </table>
