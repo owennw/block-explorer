@@ -8,11 +8,11 @@
       self.txHash = $routeParams.txHash;
 
       self.nodes = [
-              { x: 500 / 3, y: 500 / 2 },
-              { x: 2 * 500 / 3, y: 500 / 2 }
+        { x: 200, y: 250 },
+        { x: 300, y: 400 }
       ];
       self.links = [
-            { source: 0, target: 1 }
+        { source: 0, target: 1 }
       ];
     }]);
 }());

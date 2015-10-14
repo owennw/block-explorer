@@ -20,9 +20,6 @@
 
           var radius = 5;
 
-          var nodes = scope.nodes;
-          var links = scope.links;
-
           var force = d3.layout.force()
             .size([width, height])
             .linkDistance(20);
@@ -51,12 +48,9 @@
                 .ease('linear')
                 .duration(animationDuration)
                 .attr({
-                  cx: function (d) {
-                    return d.x;
-                  },
-                  cy: function (d) {
-                    return d.y;
-                  }
+                  r: radius,
+                  cx: function (d) { return d.x; },
+                  cy: function (d) { return d.y; }
                 });
 
               link
@@ -64,18 +58,10 @@
                 .ease('linear')
                 .duration(animationDuration)
                 .attr({
-                  x1: function (d) {
-                    return d.source.x;
-                  },
-                  y1: function (d) {
-                    return d.source.y;
-                  },
-                  x2: function (d) {
-                    return d.target.x;
-                  },
-                  y2: function (d) {
-                    return d.target.y;
-                  }
+                  x1: function (d) { return d.source.x; },
+                  y1: function (d) { return d.source.y; },
+                  x2: function (d) { return d.target.x; },
+                  y2: function (d) { return d.target.y; }
                 });
 
               force.stop();
@@ -83,17 +69,6 @@
               setTimeout(
                 function () { force.start(); },
                 animationDuration);
-            });
-
-            force.on('end', function () {
-              node.attr('r', radius)
-                  .attr('cx', function (d) { return d.x; })
-                  .attr('cy', function (d) { return d.y; });
-
-              link.attr('x1', function (d) { return d.source.x; })
-                  .attr('y1', function (d) { return d.source.y; })
-                  .attr('x2', function (d) { return d.target.x; })
-                  .attr('y2', function (d) { return d.target.y; });
             });
 
             force.start();
