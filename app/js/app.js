@@ -5,7 +5,9 @@
     'ngRoute',
     'blockChain.list',
     'blockChain.detail',
-    'blockChain.search'
+    'blockChain.search',
+    'blockChain.transaction',
+    'blockChain.forceGraph'
   ])
     .config(['$routeProvider', function ($routeProvider) {
       $routeProvider
@@ -27,10 +29,10 @@
           controller: 'SearchCtrl',
           controllerAs: 'searchCtrl'
         })
-        .when('/block/:blockHash/tx/:tx', {
+        .when('/block/:blockHash/tx/:txHash', {
           templateUrl: 'partials/transaction-graph.html',
           controller: 'TransactionCtrl',
-          controllerAs: 'transactionCtrl'
+          controllerAs: 'txCtrl'
         })
         .otherwise({
           redirectTo: function () {

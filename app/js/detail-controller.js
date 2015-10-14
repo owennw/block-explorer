@@ -18,11 +18,11 @@
           });
 
         self.previous = function () {
-          $location.path('/blocks/' + self.block.previousblockhash);
+          $location.path('/block/' + self.block.previousblockhash);
         };
 
         self.next = function () {
-          $location.path('/blocks/' + self.block.nextblockhash);
+          $location.path('/block/' + self.block.nextblockhash);
         };
       }]);
 }());
