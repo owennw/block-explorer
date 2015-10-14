@@ -3,7 +3,8 @@
     "$": false,
     "angular": false,
     "moment": false,
-    "window":  false
+    "window": false,
+    "d3":  false
   },
   "env": {
     "node": true
