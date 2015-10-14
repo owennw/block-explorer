@@ -4,16 +4,23 @@
   angular.module('blockChain.bitcoin', [])
     .factory('bitcoinService', ['$http', '$q', function ($http, $q) {
       var baseUrl = 'https://blockexplorer.com/api/';
-      var cache = {};
+      var blockCache = {};
+      var txCache = {};
 
-      function fetchBlock(hash) {
-        if (cache[hash]) {
-          var deferred = $q.defer();
-          deferred.resolve(cache[hash]);
-          return deferred.promise;
+      function fetchTransaction(txId) {
+        if (txCache[txId]) {
+          return promise(txCache[txId]);
         }
 
-        return fetch('block/' + hash, hash);
+        return fetch('tx/' + txId, txId, txCache);
+      }
+
+      function fetchBlock(hash) {
+        if (blockCache[hash]) {
+          return promise(blockCache[hash]);
+        }
+
+        return fetch('block/' + hash, hash, blockCache);
       }
 
       function fetchLatestBlock() {
@@ -36,7 +43,7 @@
           });
       }
 
-      function fetch(urlFragment, hash) {
+      function fetch(urlFragment, hash, cache) {
         return $http.get(baseUrl + urlFragment)
           .then(function (response) {
             if (hash) {
@@ -49,7 +56,14 @@
           });
       }
 
+      function promise(item) {
+        var deferred = $q.defer();
+        deferred.resolve(item);
+        return deferred.promise;
+      }
+
       return {
+        fetchTransaction: fetchTransaction,
         fetchLatestBlock: fetchLatestBlock,
         fetchBlock: fetchBlock,
         fetchHash: fetchHash
