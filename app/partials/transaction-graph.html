@@ -16,5 +16,8 @@
         </div>
     </div>
 
-    <tx-force-graph nodes="txCtrl.nodes" links="txCtrl.links"></tx-force-graph>
+    <tx-force-graph nodes="txCtrl.nodes" 
+                    links="txCtrl.links"
+                    node-click="txCtrl.expand(node)">
+    </tx-force-graph>
 </div>

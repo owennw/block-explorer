@@ -13,50 +13,50 @@
       function initialise() {
         bitcoinService.fetchTransaction(self.txHash)
           .then(function (tx) {
-            var newNode = { txHash: self.txHash, expanded: false };
+            var newNode = { txHash: self.txHash, expanded: false, root: true };
             self.nodes.push(newNode);
-            addToDict(tx, 0, newNode);
-            expandTransaction(tx);
+            addToDict(self.txHash, tx, 0);
+            expandTransaction(self.txHash);
+            newNode.expanded = true;
           });
       }
 
-      function expandTransaction(tx) {
-        var txs = tx.vin;
-        var parent = fetchFromDict(tx);
+      function expandTransaction(txHash) {
+        var parent = fetchFromDict(txHash);
+        var txs = parent.tx.vin;
         for (var i = 0, max = txs.length; i < max; i += 1) {
-          fetchTransaction(txs[i].txid, parent.id);
+          addTx(txs[i].txid, parent.id);
         }
-
-        parent.node.expanded = true;
       }
 
-      function fetchTransaction(txHash, parentId) {
+      function addTx(txHash, parentId) {
         bitcoinService.fetchTransaction(txHash)
           .then(function (tx) {
             var myId = id();
-            var newNode = { txHash: tx.txid, expanded: false };
-            
-            addToDict(tx, myId, newNode);
+            var newNode = { txHash: tx.txid, expanded: false, root: false };
+
+            addToDict(txHash, tx, myId);
 
             self.nodes.push(newNode);
             self.links.push({ source: parentId, target: myId });
           });
       }
 
-      function addToDict(tx, id, node) {
-        txDict[tx] = { id: id, node: node };
+      function addToDict(txHash, tx, id) {
+        txDict[txHash] = { id: id, tx: tx };
       }
 
-      function fetchFromDict(tx) {
-        return txDict[tx];
+      function fetchFromDict(txHash) {
+        return txDict[txHash];
       }
 
       function id() {
         return self.nodes.length;
       }
 
-      self.expand = function (item) {
-        expandTransaction(item.txHash);
+      self.expand = function (node) {
+        expandTransaction(node.txHash);
+        node.expanded = true;
       };
 
       initialise();

@@ -7,7 +7,8 @@
         restrict: 'E',
         scope: {
           nodes: '=',
-          links: '='
+          links: '=',
+          nodeClick: '&'
         },
         link: function (scope, element, attrs) {
           var margin = { top: 10, right: 10, bottom: 10, left: 10 },
@@ -64,6 +65,9 @@
               .attr({
                 class: 'node',
                 r: 10
+              })
+              .on('click', function (node) {
+                scope.nodeClick({ node: node });
               });
 
             force.on('tick', function () {

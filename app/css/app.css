@@ -22,6 +22,11 @@ hr {
   stroke-width: 1px;
 }
 
+.node:hover {
+  stroke-width: 2px;
+  cursor: crosshair;
+}
+
 .link {
   stroke: #413c3c;
 }
