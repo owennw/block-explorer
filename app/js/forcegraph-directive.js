@@ -31,14 +31,7 @@
             .size([width, height])
             .linkDistance(60);
 
-          var tick = function (node, link, radius) {
-            node
-              .attr({
-                r: radius,
-                cx: function (d) { return d.x; },
-                cy: function (d) { return d.y; }
-              });
-
+          var tick = function (node, link) {
             link
               .attr({
                 x1: function (d) { return d.source.x; },
@@ -46,25 +39,40 @@
                 x2: function (d) { return d.target.x; },
                 y2: function (d) { return d.target.y; }
               });
+
+            node
+              .attr({
+                cx: function (d) { return d.x; },
+                cy: function (d) { return d.y; }
+              });
           };
 
+          var renderCount = 0;
           var render = function (nodes, links) {
-            force
-              .nodes(nodes)
-              .links(links);
 
             var link = svg.selectAll('.link')
-              .data(links).enter()
-                .append('line')
-                .attr('class', 'link');
+              .data(links);
 
             var node = svg.selectAll('.node')
-              .data(nodes).enter()
-                .append('circle')
-                .attr('class', 'node');
+              .data(nodes);
+
+            force
+              .links(links)
+              .nodes(nodes);
+
+            link.enter()
+              .append('line')
+              .attr('class', 'link');
+
+            node.enter()
+              .append('circle')
+              .attr({
+                class: 'node',
+                r: 10
+              });
 
             force.on('tick', function () {
-              tick(node, link, 10);
+              tick(node, link);
             });
 
             force.start();
@@ -74,8 +82,7 @@
             render(scope.nodes, scope.links);
           };
 
-          //scope.$watch('nodes', renderHelper, true);
-          renderHelper();
+          scope.$watch('nodes', renderHelper, true);
         }
       };
     });
