@@ -30,7 +30,10 @@
 
           var force = d3.layout.force()
             .size([width, height])
-            .linkDistance(60);
+            .linkDistance(60)
+            .charge(-500)
+            .friction(0.7)
+            .gravity(0.4);
 
           var tick = function (node, link) {
             link
@@ -69,6 +72,10 @@
               .on('click', function (node) {
                 scope.nodeClick({ node: node });
               });
+
+            node
+              .classed('root', function (node) { return node.root; })
+              .classed('expanded', function (node) { return node.expanded; });
 
             force.on('tick', function () {
               tick(node, link);

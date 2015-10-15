@@ -22,9 +22,21 @@ hr {
   stroke-width: 1px;
 }
 
+.node.expanded {
+  fill: #b24bc6;
+}
+
+.node.root {
+  fill: #f20d0d;
+}
+
 .node:hover {
   stroke-width: 2px;
   cursor: crosshair;
+}
+
+.node.expanded:hover {
+  cursor: default;
 }
 
 .link {

@@ -13,11 +13,11 @@
       function initialise() {
         bitcoinService.fetchTransaction(self.txHash)
           .then(function (tx) {
-            var newNode = { txHash: self.txHash, expanded: false, root: true };
-            self.nodes.push(newNode);
+            var rootNode = { txHash: self.txHash, expanded: false, root: true };
+            self.nodes.push(rootNode);
             addToDict(self.txHash, tx, 0);
             expandTransaction(self.txHash);
-            newNode.expanded = true;
+            rootNode.expanded = true;
           });
       }
 
@@ -55,8 +55,10 @@
       }
 
       self.expand = function (node) {
-        expandTransaction(node.txHash);
-        node.expanded = true;
+        if (!node.expanded) {
+          expandTransaction(node.txHash);
+          node.expanded = true;
+        }
       };
 
       initialise();
