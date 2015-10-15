@@ -16,13 +16,13 @@
 
           var svg = d3.select(element[0]).append('svg')
             .attr({
+              class: 'force',
               width: width + margin.left + margin.right,
               height: height + margin.top + margin.bottom
             });
 
           svg.append('rect')
             .attr({
-              class: 'force',
               width: width,
               height: height
             });
@@ -47,14 +47,9 @@
               });
           };
 
-          var renderCount = 0;
           var render = function (nodes, links) {
-
-            var link = svg.selectAll('.link')
-              .data(links);
-
-            var node = svg.selectAll('.node')
-              .data(nodes);
+            var link = svg.selectAll('.link').data(links),
+              node = svg.selectAll('.node').data(nodes);
 
             force
               .links(links)
