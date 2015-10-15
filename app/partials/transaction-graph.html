@@ -6,13 +6,35 @@
         <div class="col-md-4">
             {{txCtrl.blockHash}}
         </div>
+        <!--<div class="col-md-7">
+            <nav-buttons></nav-buttons>
+        </div>-->
     </div>
+
+    <br />
+
     <div class="row">
         <div class="col-md-1">
             Transaction:
         </div>
         <div class="col-md-4">
             {{txCtrl.txHash}}
+        </div>
+        <!--<div class="col-md-7">
+            <nav-buttons></nav-buttons>
+        </div>-->
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Number of nodes: {{txCtrl.nodeCount()}}
+        </div>
+
+        <div class="col-md-6">
+            <button type="button" class="btn btn-default pull-right" 
+                    ng-click="txCtrl.expandLayer()">
+                Expand Layer
+            </button>
         </div>
     </div>
 

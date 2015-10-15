@@ -61,6 +61,19 @@
         }
       };
 
+      self.expandLayer = function () {
+        var tempNodes = self.nodes;
+        tempNodes.forEach(function (node) {
+          if (!node.expanded) {
+            self.expand(node);
+          }
+        });
+      };
+
+      self.nodeCount = function () {
+        return self.nodes.length;
+      };
+
       initialise();
     }]);
 }());
