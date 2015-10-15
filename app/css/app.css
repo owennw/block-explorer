@@ -1,10 +1,27 @@
 #moredetails {
-    text-align: right;
-    margin: 10px;
-    font-size: small;
-    font-style: italic;
+  text-align: right;
+  margin: 10px;
+  font-size: small;
+  font-style: italic;
 }
 
 hr {
-    margin: 5px;
+  margin: 5px;
+}
+
+.force {
+  fill: white;
+  stroke: black;
+  stroke-width: 1;
+  stroke-opacity: 0.8;
+}
+
+.node {
+  fill: #c54bc6;
+  stroke: black;
+  stroke-width: 1px;
+}
+
+.link {
+  stroke: #413c3c;
 }

@@ -1,6 +1,20 @@
 <div class="container">
-    <p>Block: {{txCtrl.blockHash}}</p>
-    <p>Transaction: {{txCtrl.txHash}}</p>
+    <div class="row">
+        <div class="col-md-1">
+            Block:
+        </div>
+        <div class="col-md-4">
+            {{txCtrl.blockHash}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            Transaction:
+        </div>
+        <div class="col-md-4">
+            {{txCtrl.txHash}}
+        </div>
+    </div>
 
     <tx-force-graph nodes="txCtrl.nodes" links="txCtrl.links"></tx-force-graph>
 </div>
