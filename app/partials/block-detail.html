@@ -1,13 +1,10 @@
 <div class="container" ng-show="blockDetailCtrl.success">
     <div class="container">
-        <button type="button" class="btn btn-default pull-right"
-                ng-disabled="blockDetailCtrl.nextDisabled" ng-click="blockDetailCtrl.next()">
-            Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="btn btn-default pull-right"
-                ng-disabled="blockDetailCtrl.previousDisabled" ng-click="blockDetailCtrl.previous()">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous
-        </button>
+        <nav-buttons prev-disabled="blockDetailCtrl.previousDisabled"
+                     prev-click="blockDetailCtrl.previous()"
+                     next-disabled="blockDetailCtrl.nextDisabled"
+                     next-click="blockDetailCtrl.next()">
+        </nav-buttons>
         <table class="table table-striped">
             <thead>
                 <tr><th colspan="2">Bitcoin Block</th></tr>
@@ -63,17 +60,17 @@
 
     <div class="container">
         <table class="table">
-          <thead>
-            <tr>
-                <th>Transactions</th>
-                <th>{{blockDetailCtrl.block.tx.length}}</th>
-            </tr>
-          </thead>
-          <tbody>
-          <tr ng-repeat="transaction in blockDetailCtrl.block.tx">
-              <td><a ng-href="#/block/{{blockDetailCtrl.block.hash}}/tx/{{transaction}}">{{transaction}}</a></td>
-          </tr>
-          </tbody>
+            <thead>
+                <tr>
+                    <th>Transactions</th>
+                    <th>{{blockDetailCtrl.block.tx.length}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transaction in blockDetailCtrl.block.tx">
+                    <td><a ng-href="#/block/{{blockDetailCtrl.block.hash}}/tx/{{transaction}}">{{transaction}}</a></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>

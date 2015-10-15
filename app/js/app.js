@@ -3,6 +3,7 @@
 
   angular.module('blockChainExplorer', [
     'ngRoute',
+    'blockChain.controls',
     'blockChain.list',
     'blockChain.detail',
     'blockChain.search',
