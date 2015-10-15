@@ -14,6 +14,7 @@ hr {
   stroke: black;
   stroke-width: 1;
   stroke-opacity: 0.8;
+  cursor: move;
 }
 
 .node {

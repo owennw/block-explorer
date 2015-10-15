@@ -28,6 +28,16 @@
               height: height
             });
 
+          var chart = svg.append('g');
+
+          var zoom = d3.behavior.zoom()
+            .on('zoom', function () {
+              chart.attr({
+                transform: 'translate(' + d3.event.translate + ')scale(' + zoom.scale() + ')'
+              });
+            });
+          svg.call(zoom);
+
           var force = d3.layout.force()
             .size([width, height])
             .linkDistance(60)
@@ -52,8 +62,8 @@
           };
 
           var render = function (nodes, links) {
-            var link = svg.selectAll('.link').data(links),
-              node = svg.selectAll('.node').data(nodes);
+            var link = chart.selectAll('.link').data(links),
+              node = chart.selectAll('.node').data(nodes);
 
             force
               .links(links)
