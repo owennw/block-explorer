@@ -8,25 +8,36 @@
       self.txHash = $routeParams.txHash;
       self.nodes = [];
       self.links = [];
-      var txDict = {};
+
+      function createDict() {
+        // prevent outside access to this dictionary
+        var txDict = {};
+        return {
+          add: function (txHash, tx, id) {
+            txDict[txHash] = { id: id, tx: tx };
+          },
+          get: function (txHash) {
+            return txDict[txHash];
+          }
+        };
+      }
+
+      var dict = createDict();
 
       function initialise() {
         bitcoinService.fetchTransaction(self.txHash)
           .then(function (tx) {
             var rootNode = { txHash: self.txHash, expanded: false, root: true };
             self.nodes.push(rootNode);
-            addToDict(self.txHash, tx, 0);
+            dict.add(self.txHash, tx, 0);
             expandTransaction(self.txHash);
             rootNode.expanded = true;
           });
       }
 
-      function expandTransaction(txHash) {
-        var parent = fetchFromDict(txHash);
-        var txs = parent.tx.vin;
-        for (var i = 0, max = txs.length; i < max; i += 1) {
-          addTx(txs[i].txid, parent.id);
-        }
+      function addNode(node, source, target) {
+        self.nodes.push(node);
+        self.links.push({ source: source, target: target });
       }
 
       function addTx(txHash, parentId) {
@@ -35,23 +46,18 @@
             var myId = id();
             var newNode = { txHash: tx.txid, expanded: false, root: false };
 
-            addToDict(txHash, tx, myId);
+            dict.add(txHash, tx, myId);
 
-            self.nodes.push(newNode);
-            self.links.push({ source: parentId, target: myId });
+            addNode(newNode, parentId, myId);
           });
       }
 
-      function addToDict(txHash, tx, id) {
-        txDict[txHash] = { id: id, tx: tx };
-      }
-
-      function fetchFromDict(txHash) {
-        return txDict[txHash];
-      }
-
-      function id() {
-        return self.nodes.length;
+      function expandTransaction(txHash) {
+        var parent = dict.get(txHash);
+        var txs = parent.tx.vin;
+        for (var i = 0, max = txs.length; i < max; i += 1) {
+          addTx(txs[i].txid, parent.id);
+        }
       }
 
       self.expand = function (node) {
@@ -73,6 +79,10 @@
       self.nodeCount = function () {
         return self.nodes.length;
       };
+
+      function id() {
+        return self.nodes.length;
+      }
 
       initialise();
     }]);
