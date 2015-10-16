@@ -27,6 +27,10 @@ hr {
   fill: #b24bc6;
 }
 
+.node.terminal {
+  fill: #767272;
+}
+
 .node.root {
   fill: #f20d0d;
 }
@@ -37,6 +41,10 @@ hr {
 }
 
 .node.expanded:hover {
+  cursor: default;
+}
+
+.node.terminal:hover {
   cursor: default;
 }
 

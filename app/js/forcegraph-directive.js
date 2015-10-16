@@ -43,7 +43,7 @@
             .linkDistance(60)
             .charge(-500)
             .friction(0.7)
-            .gravity(0.4);
+            .gravity(0.2);
 
           var tick = function (node, link) {
             link
@@ -85,7 +85,8 @@
 
             node
               .classed('root', function (node) { return node.root; })
-              .classed('expanded', function (node) { return node.expanded; });
+              .classed('expanded', function (node) { return node.expanded; })
+              .classed('terminal', function (node) { return node.terminal; });
 
             force.on('tick', function () {
               tick(node, link);

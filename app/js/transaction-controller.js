@@ -24,10 +24,14 @@
 
       var dict = createDict();
 
+      function createNode(hash, expanded, root, terminal) {
+        return { txHash: hash, expanded: expanded, root: root, terminal: terminal };
+      }
+
       function initialise() {
         bitcoinService.fetchTransaction(self.txHash)
           .then(function (tx) {
-            var rootNode = { txHash: self.txHash, expanded: false, root: true };
+            var rootNode = createNode(self.txHash, false, true, null);
             self.nodes.push(rootNode);
             dict.add(self.txHash, tx, 0);
             expandTransaction(self.txHash);
@@ -36,29 +40,32 @@
       }
 
       function expandTransaction(txHash) {
-        var parent = dict.get(txHash);
-        var txs = parent.tx.vin;
-
+        var txValue = dict.get(txHash);
+        var txs = txValue.tx.vin;
         var txCallback = function (tx) {
           var myId = id();
-          var newNode = { txHash: tx.txid, expanded: false, root: false };
+
+          var terminal = tx.vin[0].txid === undefined;
+          var newNode = createNode(tx.txid, false, false, terminal);
 
           dict.add(tx.txid, tx, myId);
 
           self.nodes.push(newNode);
-          self.links.push({ source: parent.id, target: myId });
+          self.links.push({ source: txValue.id, target: myId });
         };
 
         for (var i = 0, max = txs.length; i < max; i += 1) {
           var nextTxHash = txs[i].txid;
 
-          bitcoinService.fetchTransaction(nextTxHash)
-            .then(txCallback);
+          if (nextTxHash) {
+            bitcoinService.fetchTransaction(nextTxHash)
+              .then(txCallback);
+          }
         }
       }
 
       self.expand = function (node) {
-        if (!node.expanded) {
+        if (!node.expanded && !node.terminal) {
           expandTransaction(node.txHash);
           node.expanded = true;
         }
