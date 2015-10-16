@@ -2,13 +2,15 @@
   'use strict';
 
   angular.module('blockChain.transaction', ['blockChain.bitcoin'])
-    .controller('TransactionCtrl', ['$routeParams', 'bitcoinService',
-      function ($routeParams, bitcoinService) {
+    .controller('TransactionCtrl', ['$routeParams', '$q', 'bitcoinService',
+      function ($routeParams, $q, bitcoinService) {
         var self = this;
         self.blockHash = $routeParams.blockHash;
         self.txHash = $routeParams.txHash;
         self.nodes = [];
         self.links = [];
+        var newNodes = [];
+        var newLinks = [];
 
         function createDict() {
           // prevent outside access to this dictionary
@@ -35,59 +37,82 @@
               var rootNode = createNode(self.txHash, false, true, null);
               self.nodes.push(rootNode);
               dict.add(self.txHash, tx, 0);
-              expandTransaction(self.txHash);
-              rootNode.expanded = true;
+              var promises = expandTransaction(self.txHash, rootNode);
+
+              run(promises);
             });
         }
 
-        function expandTransaction(txHash) {
+        function run(promises) {
+          $q.all(promises)
+            .then(function () {
+              self.links = self.links.concat(newLinks);
+              self.nodes = self.nodes.concat(newNodes);
+
+              newNodes = [];
+              newLinks = [];
+            });
+        }
+
+        function expandTransaction(txHash, node) {
           var txValue = dict.get(txHash);
           var txs = txValue.tx.vin;
+          var promises = [];
 
-          var createNodeAndLink = function (tx) {
-            var myId = self.nodes.length;
+          function fetch(hash, node) {
+            var deferred = $q.defer();
+            deferred.resolve(
+              bitcoinService.fetchTransaction(hash)
+                .then(addNodeAndLink)
+                .then(function () { node.expanded = true; }));
+            return deferred.promise;
+          }
+
+          function addNodeAndLink(tx) {
+            var myId = self.nodes.length + newNodes.length;
 
             var terminal = tx.vin[0].txid === undefined;
             var newNode = createNode(tx.txid, false, false, terminal);
 
             dict.add(tx.txid, tx, myId);
 
-            return {
-              node: newNode,
-              link: {source: txValue.id, target: myId}
-            };
-          };
-
-          function addNodeAndLink(a) {
-            self.nodes.push(a.node);
-            self.links.push(a.link);
+            newNodes.push(newNode);
+            newLinks.push({ source: txValue.id, target: myId });
           }
 
           for (var i = 0, max = txs.length; i < max; i += 1) {
             var nextTxHash = txs[i].txid;
 
             if (nextTxHash) {
-              bitcoinService.fetchTransaction(nextTxHash)
-                .then(createNodeAndLink)
-                .then(addNodeAndLink);
+              promises.push(fetch(nextTxHash, node));
             }
           }
+
+          return promises;
         }
 
-        self.expand = function (node) {
+        self.expand = function (node, layer) {
           if (!node.expanded && !node.terminal) {
-            expandTransaction(node.txHash);
-            node.expanded = true;
+            var promises = expandTransaction(node.txHash, node);
+
+            if (!layer) {
+              run(promises);
+            }
+
+            return promises;
           }
         };
 
         self.expandLayer = function () {
           var tempNodes = self.nodes;
+          var promises = [];
           tempNodes.forEach(function (node) {
             if (!node.expanded) {
-              self.expand(node);
+              promises = promises.concat(self.expand(node, true));
             }
           });
+
+          run(promises);
         };
 
         self.nodeCount = function () {
