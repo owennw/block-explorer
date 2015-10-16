@@ -35,28 +35,25 @@
           });
       }
 
-      function addNode(node, source, target) {
-        self.nodes.push(node);
-        self.links.push({ source: source, target: target });
-      }
-
-      function addTx(txHash, parentId) {
-        bitcoinService.fetchTransaction(txHash)
-          .then(function (tx) {
-            var myId = id();
-            var newNode = { txHash: tx.txid, expanded: false, root: false };
-
-            dict.add(txHash, tx, myId);
-
-            addNode(newNode, parentId, myId);
-          });
-      }
-
       function expandTransaction(txHash) {
         var parent = dict.get(txHash);
         var txs = parent.tx.vin;
+
+        var txCallback = function (tx) {
+          var myId = id();
+          var newNode = { txHash: tx.txid, expanded: false, root: false };
+
+          dict.add(tx.txid, tx, myId);
+
+          self.nodes.push(newNode);
+          self.links.push({ source: parent.id, target: myId });
+        };
+
         for (var i = 0, max = txs.length; i < max; i += 1) {
-          addTx(txs[i].txid, parent.id);
+          var nextTxHash = txs[i].txid;
+
+          bitcoinService.fetchTransaction(nextTxHash)
+            .then(txCallback);
         }
       }
 
