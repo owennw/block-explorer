@@ -32,7 +32,8 @@
 
         <div class="col-md-6">
             <button type="button" class="btn btn-default pull-right" 
-                    ng-click="txCtrl.expandLayer()">
+                    ng-click="txCtrl.expandLayer()"
+                    ng-disabled="txCtrl.expandDisabled()">
                 Expand Layer
             </button>
         </div>

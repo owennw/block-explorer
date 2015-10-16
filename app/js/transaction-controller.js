@@ -11,6 +11,7 @@
         self.links = [];
         var newNodes = [];
         var newLinks = [];
+        var expandDisabled = false;
 
         function createDict() {
           // prevent outside access to this dictionary
@@ -51,6 +52,7 @@
 
               newNodes = [];
               newLinks = [];
+              expandDisabled = false;
             });
         }
 
@@ -104,6 +106,7 @@
         };
 
         self.expandLayer = function () {
+          expandDisabled = true;
           var tempNodes = self.nodes;
           var promises = [];
           tempNodes.forEach(function (node) {
@@ -117,6 +120,10 @@
 
         self.nodeCount = function () {
           return self.nodes.length;
+        };
+
+        self.expandDisabled = function () {
+          return expandDisabled;
         };
 
         initialise();
